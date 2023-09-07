@@ -153,9 +153,10 @@ class App
       return
     end
 
-    rental = Rental.new(date, book, person)
+    rental = Rental.new(date, person, book)
     @rentals << rental
     puts "Rental created: #{person.name} rented #{book.title} on #{date}."
+    puts "Total rentals in the array: #{@rentals.length}"
   end
 
   # option 6
@@ -163,7 +164,6 @@ class App
     list_all_people
     print 'Enter person\'s ID: '
     person_id = gets.chomp.to_i
-
     person = @people.find { |pers| pers.id == person_id }
 
     if person.nil?
