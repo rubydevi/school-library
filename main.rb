@@ -1,10 +1,5 @@
 require_relative 'app'
 
-def main
-  App.new
-  run
-end
-
 def run
   puts 'Welcome to School Library App!'
   library_options
@@ -21,12 +16,14 @@ def library_options
     7 => :exit_library
   }
 
+  app = App.new
+
   loop do
     display_menu
     choice = gets.chomp.to_i
 
     if menu_options.key?(choice)
-      send(menu_options[choice])
+      app.send(menu_options[choice])
       break if choice == 7
     else
       puts 'Please choose a valid option from the options provided.'
@@ -48,6 +45,11 @@ end
 
 def exit_library
   puts "\nThanks for using my library!"
+end
+
+def main
+  App.new
+  run
 end
 
 main
