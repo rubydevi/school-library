@@ -38,12 +38,17 @@ class App
   def create_person
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     type = gets.chomp.to_i
+    
+    print 'Age: '
+    age = gets.chomp.to_i
+    print 'Name: '
+    name = gets.chomp
 
     case type
     when 1
-      create_student
+      create_student(age, name)
     when 2
-      create_teacher
+      create_teacher(age, name)
     else
       puts 'Oops! You have entered an invalid choice. Please start again.'
       nil
@@ -51,31 +56,26 @@ class App
   end
 
   # option 3.1
-  def create_student
-    print 'Age: '
-    age = gets.chomp.to_i
-    print 'Name: '
-    name = gets.chomp
+  def create_student(age, name)
     print 'Has parent\'s permission? (Y/N): '
     permission = gets.chomp
     person = Student.new(age, name, permission)
 
-    @people << person
-    puts "Congratulations #{person.name}, you have successfully created a student! Here is your ID: #{person.id}"
+    insert_person(person)
   end
 
   # option 3.2
-  def create_teacher
-    print 'Age: '
-    age = gets.chomp.to_i
-    print 'Name: '
-    name = gets.chomp
+  def create_teacher(age, name)
     print 'Specialization: '
     specialization = gets.chomp
     person = Teacher.new(age, specialization, name)
 
+    insert_person(person)
+  end
+
+  def insert_person(person)
     @people << person
-    puts "Congratulations #{person.name}, you have successfully created a teacher! Here is your ID: #{person.id}"
+    puts "Congratulations #{person.name}, you have successfully created a student! Here is your ID: #{person.id}"
   end
 
   # option 4
@@ -94,14 +94,14 @@ class App
   def create_rental
     list_all_people
     print 'Enter person serial number: '
-    person_serial_number = gets.chomp.to_i
+    person_number = gets.chomp.to_i
     list_all_books
     print 'Enter book serial number: '
-    book_id = gets.chomp.to_i
+    book_number = gets.chomp.to_i
     print 'Enter rental date: '
     date = gets.chomp
-    person = @people[person_serial_number - 1]
-    book = @books[book_id - 1]
+    person = @people[person_number - 1]
+    book = @books[book_number - 1]
 
     if person.nil? || book.nil?
       puts 'Invalid person or book ID.'
