@@ -38,7 +38,6 @@ class App
   def create_person
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     type = gets.chomp.to_i
-    
     print 'Age: '
     age = gets.chomp.to_i
     print 'Name: '
@@ -87,15 +86,7 @@ class App
   end
 
   # option 5
-  def create_rental
-    list_all_people
-    print 'Enter person serial number: '
-    person_number = gets.chomp.to_i
-    list_all_books
-    print 'Enter book serial number: '
-    book_number = gets.chomp.to_i
-    print 'Enter rental date: '
-    date = gets.chomp
+  def create_rental(person_number, book_number, date)
     person = @people[person_number - 1]
     book = @books[book_number - 1]
 

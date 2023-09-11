@@ -46,17 +46,28 @@ class Main
     else
       @app.send(choice)
     end
-    
     # @app.send(choice)
   end
 
   # Refer this one for CREATE RENTAL
-  def create_book    
+  def create_book
     print 'Enter title: '
     title = gets.chomp
     print 'Enter author: '
     author = gets.chomp
     @app.create_book(title, author)
+  end
+
+  def create_rental
+    @app.list_all_people
+    print 'Enter person serial number: '
+    person_number = gets.chomp.to_i
+    @app.list_all_books
+    print 'Enter book serial number: '
+    book_number = gets.chomp.to_i
+    print 'Enter rental date: '
+    date = gets.chomp
+    @app.create_rental(person_number, book_number, date)
   end
 
   def display_menu
