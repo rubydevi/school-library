@@ -43,6 +43,8 @@ class Main
     case choice
     when :create_book
       create_book
+    when :create_rental
+      create_rental
     else
       @app.send(choice)
     end
