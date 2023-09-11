@@ -1,8 +1,10 @@
 require_relative 'app'
+require_relative 'menu'
 
 class Main
   def initialize
     @app = App.new
+    @menu = Menu.new
     run
   end
 
@@ -15,7 +17,7 @@ class Main
     menu_options = create_menu_options
 
     loop do
-      display_menu
+      @menu.display_menu
       choice = gets.chomp.to_i
 
       if menu_options.key?(choice)
@@ -92,18 +94,6 @@ class Main
     print 'Enter person\'s ID: '
     person_id = gets.chomp.to_i
     @app.list_rentals_for_person(person_id)
-  end
-
-  def display_menu
-    puts "\nPlease choose an option by entering a number:"
-    puts '1 - List all books'
-    puts '2 - List all people'
-    puts '3 - Create a person'
-    puts '4 - Create a book'
-    puts '5 - Create a rental'
-    puts '6 - List all rentals for a given person id'
-    puts '7 - Exit'
-    print 'Select an option (1-7): '
   end
 
   def exit_library
