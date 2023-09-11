@@ -35,14 +35,7 @@ class App
   end
 
   # option 3
-  def create_person
-    puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
-    type = gets.chomp.to_i
-    print 'Age: '
-    age = gets.chomp.to_i
-    print 'Name: '
-    name = gets.chomp
-
+  def create_person(type, age, name)
     case type
     when 1
       create_student(age, name)
@@ -101,11 +94,7 @@ class App
   end
 
   # option 6
-  def list_rentals_for_person
-    list_all_people
-    print 'Enter person\'s ID: '
-    person_id = gets.chomp.to_i
-
+  def list_rentals_for_person(person_id)
     person = @people.find { |pers| pers.id == person_id }
 
     if person.nil?

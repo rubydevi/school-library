@@ -34,24 +34,39 @@ class Main
       3 => :create_person,
       4 => :create_book,
       5 => :create_rental,
-      6 => :list_rentals_for_person,
+      6 => :list_rentals,
       7 => :exit_library
     }
   end
 
   def handle_choice(choice)
     case choice
+    when :create_person
+      create_person
     when :create_book
       create_book
     when :create_rental
       create_rental
+    when :list_rentals
+      list_rentals
+    when :exit_library
+      exit_library
     else
       @app.send(choice)
     end
-    # @app.send(choice)
   end
 
-  # Refer this one for CREATE RENTAL
+  def create_person
+    puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+    type = gets.chomp.to_i
+
+    print 'Age: '
+    age = gets.chomp.to_i
+    print 'Name: '
+    name = gets.chomp
+    @app.create_person(type, age, name)
+  end
+
   def create_book
     print 'Enter title: '
     title = gets.chomp
@@ -70,6 +85,13 @@ class Main
     print 'Enter rental date: '
     date = gets.chomp
     @app.create_rental(person_number, book_number, date)
+  end
+
+  def list_rentals
+    @app.list_all_people
+    print 'Enter person\'s ID: '
+    person_id = gets.chomp.to_i
+    @app.list_rentals_for_person(person_id)
   end
 
   def display_menu
