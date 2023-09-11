@@ -98,6 +98,11 @@ You can only run this project on your local machine
 - Twitter: [@arieabyss](https://twitter.com/ariesabyss)
 - LinkedIn: [Chongtham Ruby Devi](https://www.linkedin.com/in/chongtham-bhoomika/)
 
+👤 **Supreeti**
+
+- GitHub: [@supreeti](https://github.com/supreeti)
+- Twitter: [@Ksupreeti](https://twitter.com/Ksupreeti)
+- LinkedIn: [Supreeti](https://www.linkedin.com/in/supreetikushwaha/) 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
