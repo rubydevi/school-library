@@ -163,7 +163,16 @@ class App
   end
 
   def save_books
-    File.write('books.json', @books.to_json)
+    books_data = []
+    serialized_books = @books.map do |book|
+      {
+        'data' => book.instance_variables.each_with_object({}) do |var, hash|
+          hash[var.to_s.delete('@')] = book.instance_variable_get(var)
+        end
+      }
+    end
+    books_data += serialized_books
+    File.write('books.json', JSON.pretty_generate(books_data))
   end
 
   def load_books
@@ -175,7 +184,17 @@ class App
   end
 
   def save_rentals
-    File.write('rentals.json', @rentals.to_json)
+    # rentals_data = []
+    # serialized_rentals = @rentals.map do |rental|
+    #   {
+    #     'data' => rental.instance_variables.each_with_object({}) do |var, hash|
+    #       hash[var.to_s.delete('@')] = rental.instance_variable_get(var)
+    #     end
+    #   }
+    # end
+    # rentals_data += serialized_rentals
+    # File.write('rentals.json', JSON.pretty_generate(rentals_data))
+    # File.write('rentals.json', @rentals.to_json)
   end
 
   def load_rentals
