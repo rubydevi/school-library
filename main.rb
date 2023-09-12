@@ -5,6 +5,7 @@ class Main
   def initialize
     @app = App.new
     @menu = Menu.new
+    @app.load_data
     run
   end
 
@@ -97,6 +98,7 @@ class Main
   end
 
   def exit_library
+    @app.save_data
     puts "\nThanks for using my library!"
   end
 end
