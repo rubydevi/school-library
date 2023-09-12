@@ -69,7 +69,7 @@ class App
 
   def insert_person(person)
     @people << person
-    puts "Congratulations #{person.name}, you have successfully created a student! Here is your ID: #{person.id}"
+    puts "Congratulations student #{person.name}! Here is your ID: #{person.id}"
   end
 
   # option 4
@@ -138,7 +138,7 @@ class App
       people_data = JSON.parse(existing_data)
       # binding.pry
     else
-      people_data = [] 
+      people_data = []
     end
 
     # Serialize the new people data to a format suitable for JSON
@@ -160,19 +160,42 @@ class App
 
   def load_people
     # body
+    if File.exist?('people.json')
+      data = JSON.parse(File.read('people.json'))
+      @people = []
+
+      data.each do |person_data|
+        if person_data['type'] == 'Student'
+          person = Student.new(person_data['data']['age'], person_data['data']['name'],
+                               person_data['data']['parents_permission'])
+        elsif person_data['type'] == 'Teacher'
+          person = Teacher.new(person_data['data']['age'], person_data['data']['specialization'],
+                               person_data['data']['name'])
+        else
+          # Handle unknown person type or missing data appropriately
+          next
+        end
+
+        # Check if a person with the same ID already exists
+        existing_person = @people.find { |p| p.id == person.id }
+
+        if existing_person
+          # Update existing person's data with the loaded data
+          existing_person.age = person.age
+          existing_person.name = person.name
+          # Add more attributes as needed
+        else
+          # Add the person to the @people array if it doesn't exist
+          @people << person
+        end
+      end
+    else
+      @people = []
+    end
   end
 
   def save_books
-    books_data = []
-    serialized_books = @books.map do |book|
-      {
-        'data' => book.instance_variables.each_with_object({}) do |var, hash|
-          hash[var.to_s.delete('@')] = book.instance_variable_get(var)
-        end
-      }
-    end
-    books_data += serialized_books
-    File.write('books.json', JSON.pretty_generate(books_data))
+    File.write('books.json', @books.to_json)
   end
 
   def load_books
@@ -184,17 +207,7 @@ class App
   end
 
   def save_rentals
-    # rentals_data = []
-    # serialized_rentals = @rentals.map do |rental|
-    #   {
-    #     'data' => rental.instance_variables.each_with_object({}) do |var, hash|
-    #       hash[var.to_s.delete('@')] = rental.instance_variable_get(var)
-    #     end
-    #   }
-    # end
-    # rentals_data += serialized_rentals
-    # File.write('rentals.json', JSON.pretty_generate(rentals_data))
-    # File.write('rentals.json', @rentals.to_json)
+    File.write('rentals.json', @rentals.to_json)
   end
 
   def load_rentals
