@@ -1,3 +1,5 @@
+require 'pry'
+require 'json'
 require_relative 'book'
 require_relative 'rental'
 require_relative 'student'
@@ -112,5 +114,75 @@ class App
         puts "  Book: #{rental.book.title}, Date: #{rental.date}"
       end
     end
+  end
+
+  # Preserve JSON data
+  def save_data
+    save_people
+    save_books
+    save_rentals
+  end
+
+  def load_data
+    load_people
+    load_books
+    load_rentals
+  end
+
+  private
+
+  def save_people
+    if File.exist?('people.json')
+      # Read the existing JSON data from the file
+      existing_data = File.read('people.json')
+      people_data = JSON.parse(existing_data)
+      # binding.pry
+    else
+      people_data = [] 
+    end
+
+    # Serialize the new people data to a format suitable for JSON
+    serialized_people = @people.map do |person|
+      {
+        'type' => person.class.to_s, # Store the class name for later deserialization
+        'data' => person.instance_variables.each_with_object({}) do |var, hash|
+          hash[var.to_s.delete('@')] = person.instance_variable_get(var)
+        end
+      }
+    end
+
+    # Append the serialized people data to the existing data
+    people_data += serialized_people
+
+    # Write the updated data to the file
+    File.write('people.json', JSON.pretty_generate(people_data))
+  end
+
+  def load_people
+    # body
+  end
+
+  def save_books
+    File.write('books.json', @books.to_json)
+  end
+
+  def load_books
+    @books = if File.exist?('books.json')
+               JSON.parse(File.read('books.json'))
+             else
+               []
+             end
+  end
+
+  def save_rentals
+    File.write('rentals.json', @rentals.to_json)
+  end
+
+  def load_rentals
+    @rentals = if File.exist?('rentals.json')
+                 JSON.parse(File.read('rentals.json'))
+               else
+                 []
+               end
   end
 end
