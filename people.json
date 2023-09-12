@@ -1,0 +1,58 @@
+[
+  {
+    "type": "Student",
+    "data": {
+      "id": 714,
+      "name": "Ama",
+      "age": 12,
+      "parents_permission": "y",
+      "rentals": [
+
+      ],
+      "classroom": null,
+      "type": "Student"
+    }
+  },
+  {
+    "type": "Teacher",
+    "data": {
+      "id": 954,
+      "name": "Maya",
+      "age": 32,
+      "parents_permission": true,
+      "rentals": [
+
+      ],
+      "specialization": "Science",
+      "type": "Teacher"
+    }
+  },
+  {
+    "type": "Student",
+    "data": {
+      "id": 214,
+      "name": "Dada",
+      "age": 20,
+      "parents_permission": "y",
+      "rentals": [
+
+      ],
+      "classroom": null,
+      "type": "Student"
+    }
+  },
+  {
+    "type": "Student",
+    "data": {
+      "id": 910,
+      "name": "Hello",
+      "age": 21,
+      "parents_permission": "n",
+      "rentals": [
+
+      ],
+      "classroom": null,
+      "type": "Student"
+    }
+  }
+]
