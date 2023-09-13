@@ -1,9 +1,9 @@
 require 'pry'
 require 'json'
-require_relative './app_code/book'
-require_relative './app_code/rental'
-require_relative './app_code/student'
-require_relative './app_code/teacher'
+require_relative 'app_code/book'
+require_relative 'app_code/rental'
+require_relative 'app_code/student'
+require_relative 'app_code/teacher'
 require './modules/data_loader'
 require './modules/data_saver'
 
