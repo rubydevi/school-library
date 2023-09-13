@@ -1,9 +1,16 @@
+require 'pry'
+require 'json'
 require_relative 'book'
 require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
+require './modules/data_loader'
+require './modules/data_saver'
 
 class App
+  include DataLoader
+  include DataSaver
+
   def initialize
     @people = [] # Array to store people (teachers and students)
     @books = [] # Array to store books
@@ -67,7 +74,7 @@ class App
 
   def insert_person(person)
     @people << person
-    puts "Congratulations #{person.name}, you have successfully created a student! Here is your ID: #{person.id}"
+    puts "Congratulations student #{person.name}! Here is your ID: #{person.id}"
   end
 
   # option 4
@@ -112,5 +119,18 @@ class App
         puts "  Book: #{rental.book.title}, Date: #{rental.date}"
       end
     end
+  end
+
+  # Preserve JSON data
+  def save_data
+    save_people
+    save_books
+    save_rentals
+  end
+
+  def load_data
+    load_people
+    load_books
+    load_rentals
   end
 end
