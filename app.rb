@@ -4,8 +4,10 @@ require_relative 'book'
 require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
+require './modules/data_loader'
 
 class App
+  include DataLoader
   def initialize
     @people = [] # Array to store people (teachers and students)
     @books = [] # Array to store books
@@ -162,57 +164,5 @@ class App
       rentals_data.push({ date: rental.date, book: rental.book.title, person: rental.person.name })
     end
     File.write('rentals.json', JSON.pretty_generate(rentals_data))
-  end
-
-  def load_people
-    # body
-    if File.exist?('people.json')
-      data = JSON.parse(File.read('people.json'))
-      @people = []
-
-      data.each do |person_data|
-        if person_data['type'] == 'Student'
-          person = Student.new(person_data['data']['age'], person_data['data']['name'],
-                               person_data['data']['parents_permission'])
-        elsif person_data['type'] == 'Teacher'
-          person = Teacher.new(person_data['data']['age'], person_data['data']['specialization'],
-                               person_data['data']['name'])
-        else
-          # Handle unknown person type or missing data appropriately
-          next
-        end
-
-        # Check if a person with the same ID already exists
-        existing_person = @people.find { |p| p.id == person.id }
-
-        if existing_person
-          # Update existing person's data with the loaded data
-          existing_person.age = person.age
-          existing_person.name = person.name
-          # Add more attributes as needed
-        else
-          # Add the person to the @people array if it doesn't exist
-          @people << person
-        end
-      end
-    else
-      @people = []
-    end
-  end
-
-  def load_books
-    @books = if File.exist?('books.json')
-               JSON.parse(File.read('books.json'))
-             else
-               []
-             end
-  end
-
-  def load_rentals
-    @rentals = if File.exist?('rentals.json')
-                 JSON.parse(File.read('rentals.json'))
-               else
-                 []
-               end
   end
 end
