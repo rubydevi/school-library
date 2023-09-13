@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "title": "Lily",
+    "author": "Flower"
+  },
+  {
+    "title": "Jasmine",
+    "author": "Aladin"
+  },
+  {
+    "title": "Cash",
+    "author": "Johnny"
+  }
+]

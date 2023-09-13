@@ -132,30 +132,36 @@ class App
   private
 
   def save_people
-    if File.exist?('people.json')
-      # Read the existing JSON data from the file
-      existing_data = File.read('people.json')
-      people_data = JSON.parse(existing_data)
-      # binding.pry
-    else
-      people_data = []
+    people_data = []
+
+    @people.map do |person|
+      if person.instance_of?(Student)
+        people_data.push({ name: person.name, age: person.age,
+                           parents_permission: person.parents_permission,
+                           classroom: person.classroom, type: 'Student' })
+      elsif person.instance_of?(Teacher)
+        people_data.push({ name: person.name, age: person.age,
+                           parents_permission: person.parents_permission,
+                           specialization: person.specialization, type: 'Teacher' })
+      end
     end
-
-    # Serialize the new people data to a format suitable for JSON
-    serialized_people = @people.map do |person|
-      {
-        'type' => person.class.to_s, # Store the class name for later deserialization
-        'data' => person.instance_variables.each_with_object({}) do |var, hash|
-          hash[var.to_s.delete('@')] = person.instance_variable_get(var)
-        end
-      }
-    end
-
-    # Append the serialized people data to the existing data
-    people_data += serialized_people
-
-    # Write the updated data to the file
     File.write('people.json', JSON.pretty_generate(people_data))
+  end
+
+  def save_books
+    books_data = []
+    @books.each do |book|
+      books_data.push({ title: book.title, author: book.author })
+    end
+    File.write('books.json', JSON.pretty_generate(books_data))
+  end
+
+  def save_rentals
+    rentals_data = []
+    @rentals.each do |rental|
+      rentals_data.push({ date: rental.date, book: rental.book.title, person: rental.person.name })
+    end
+    File.write('rentals.json', JSON.pretty_generate(rentals_data))
   end
 
   def load_people
@@ -194,20 +200,12 @@ class App
     end
   end
 
-  def save_books
-    File.write('books.json', @books.to_json)
-  end
-
   def load_books
     @books = if File.exist?('books.json')
                JSON.parse(File.read('books.json'))
              else
                []
              end
-  end
-
-  def save_rentals
-    File.write('rentals.json', @rentals.to_json)
   end
 
   def load_rentals
