@@ -1,7 +1,7 @@
 module DataLoader
   def load_people
-    File.new('people.json', 'w') unless File.exist?('people.json')
-    people = File.read('people.json')
+    File.new('data/people.json', 'w') unless File.exist?('data/people.json')
+    people = File.read('data/people.json')
     return if people.empty?
 
     JSON.parse(people).each do |person|
@@ -14,8 +14,8 @@ module DataLoader
   end
 
   def load_books
-    File.new('books.json', 'w') unless File.exist?('books.json')
-    books = File.read('books.json')
+    File.new('data/books.json', 'w') unless File.exist?('data/books.json')
+    books = File.read('data/books.json')
     return if books.empty?
 
     JSON.parse(books).each do |book|
@@ -24,8 +24,8 @@ module DataLoader
   end
 
   def load_rentals
-    File.new('rentals.json', 'w') unless File.exist?('rentals.json')
-    rentals = File.read('rentals.json')
+    File.new('data/rentals.json', 'w') unless File.exist?('data/rentals.json')
+    rentals = File.read('data/rentals.json')
     return if rentals.empty?
 
     JSON.parse(rentals).each do |rental|

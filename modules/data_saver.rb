@@ -13,7 +13,7 @@ module DataSaver
                            specialization: person.specialization, type: 'Teacher' })
       end
     end
-    File.write('people.json', JSON.pretty_generate(people_data))
+    File.write('data/people.json', JSON.pretty_generate(people_data))
   end
 
   def save_books
@@ -21,7 +21,7 @@ module DataSaver
     @books.each do |book|
       books_data.push({ title: book.title, author: book.author })
     end
-    File.write('books.json', JSON.pretty_generate(books_data))
+    File.write('data/books.json', JSON.pretty_generate(books_data))
   end
 
   def save_rentals
@@ -29,6 +29,6 @@ module DataSaver
     @rentals.each do |rental|
       rentals_data.push({ date: rental.date, book: rental.book.title, person: rental.person.name })
     end
-    File.write('rentals.json', JSON.pretty_generate(rentals_data))
+    File.write('data/rentals.json', JSON.pretty_generate(rentals_data))
   end
 end
